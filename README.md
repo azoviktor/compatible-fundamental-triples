@@ -3,8 +3,7 @@ Code and computations for studying compatible triples of fundamental and essenti
 
 ## Running Macaulay2 code used in proofs
 
-Using either [Macaulay2Web](https://www.unimelb-macaulay2.cloud.edu.au/#editor) or the emacs/VSCode interfaces for a locally-installed [Macaulay2]
-(https://macaulay2.com/), run the code in [proofs.m2](./proofs.m2) line-by-line.
+Using either [Macaulay2Web](https://www.unimelb-macaulay2.cloud.edu.au/#editor) or the emacs/VSCode interfaces for a locally-installed [Macaulay2](https://macaulay2.com/), run the code in [proofs.m2](./proofs.m2) line-by-line.
 
 ## Running julia code for the representation theory part
 
