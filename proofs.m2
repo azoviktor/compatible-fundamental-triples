@@ -269,13 +269,6 @@ I = I + ideal quintics;
 -- ! the next line takes ~ 3 min!
 elapsedTime G = groebnerBasis(I, Strategy => "F4");
 
--- ! Anton: skipped this block --- it doesn't terminate for me (in >1 hour) !
-RmodI = R/I;
-phi = map(RmodI, QQ[F_(1,1,1)..F_(3,3,3)], flatten entries F12 | flatten entries F13 | flatten entries F23)
-elapsedTime K = ker phi;
-dim K, degree K
-degree radical K
-
 needsPackage "FGLM"
 -- ! the next line takes ~ 30 min!
 elapsedTime FG = fglm(I, QQ[gens R, MonomialOrder => Lex]);
