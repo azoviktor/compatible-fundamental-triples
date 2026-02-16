@@ -214,7 +214,8 @@ elapsedTime I = I : minors(2, F13);
 G = groebnerBasis(I, Strategy => "F4");
 inI = ideal leadTerm G;
 dim inI, degree inI -- (0, 12)
-phi = map(R/I, QQ[F_(1,1,1)..F_(2,3,3)], flatten entries F13 | flatten entries F23);
+RmodI = R/I;
+phi = map(RmodI, QQ[F_(1,1,1)..F_(2,3,3)], flatten entries F13 | flatten entries F23);
 -- next line takes ~ 1min
 elapsedTime I = ker phi;
 dim I, degree I
@@ -267,10 +268,14 @@ quintics = flatten \\ flatten \ entries \ {
 I = I + ideal quintics;
 -- ! the next line takes ~ 3 min!
 elapsedTime G = groebnerBasis(I, Strategy => "F4");
-phi = map(R/I, QQ[F_(1,1,1)..F_(3,3,3)], flatten entries F12 | flatten entries F13 | flatten entries F23)
+
+-- ! Anton: skipped this block --- it doesn't terminate for me (in >1 hour) !
+RmodI = R/I;
+phi = map(RmodI, QQ[F_(1,1,1)..F_(3,3,3)], flatten entries F12 | flatten entries F13 | flatten entries F23)
 elapsedTime K = ker phi;
 dim K, degree K
 degree radical K
+
 needsPackage "FGLM"
 -- ! the next line takes ~ 30 min!
 elapsedTime FG = fglm(I, QQ[gens R, MonomialOrder => Lex]);
@@ -279,13 +284,15 @@ p = first flatten entries gens FG;
 degree radical ideal p
 -- finally: to guarantee all 81 points lie in the image,
 --  check sufficient rank and epipole conditions
---  (all GBs below should quickly give {1})
-gens gb(I + minors(2, F12))
-gens gb(I + minors(2, F13))
-gens gb(I + minors(2, F23))
-gens gb(I + minors(3, F13|F23))
-gens gb(I + minors(3, F12|transpose F23))
-gens gb(I + minors(3, transpose F12|transpose F13))
+--  (all ideals below should equal the whole ring)
+assert all({
+	I + minors(2, F12),
+	I + minors(2, F13),
+	I + minors(2, F23),
+	I + minors(3, F13|F23),
+	I + minors(3, F12|transpose F23),
+	I + minors(3, transpose F12|transpose F13)
+	}, J -> J == R)
 -*
 Thus mdeg >= 81. Reverse inequality follows from part 1.
 *-
